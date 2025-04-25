@@ -1,0 +1,26 @@
+{
+  "name": "landing-planium",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.0",
+    "@fontsource/montserrat": "^5.1.1",
+    "@heroicons/react": "^2.2.0",
+    "@iconify/react": "^5.2.0",
+    "astro": "^5.2.5",
+    "astro-i18n": "^2.2.4",
+    "swiper": "^11.2.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.1",
+    "eslint-plugin-astro": "^1.3.1",
+    "prettier": "^3.5.1",
+    "prettier-plugin-astro": "^0.14.1"
+  }
+}

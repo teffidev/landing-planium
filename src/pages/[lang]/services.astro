@@ -1,0 +1,363 @@
+---
+import { languageList } from 'src/i18n/ui';
+import { useTranslations } from 'src/i18n/utils';
+import Layout from '@layouts/Layout.astro';
+import Navbar from '@components/Navbar.astro';
+import FeatureCard from '@components/FeatureCard.astro';
+import { getFeatures } from 'src/utils/features';
+
+// Esta función es requerida para todas las rutas dinámicas en Astro
+export function getStaticPaths() {
+  return Object.keys(languageList).map((lang) => {
+    return {
+      params: { lang },
+    };
+  });
+}
+
+// Obtener el parámetro de idioma de la URL
+const { lang } = Astro.params;
+
+// Validar que sea un idioma soportado
+if (!Object.keys(languageList).includes(lang!)) {
+  return Astro.redirect('/es/services'); // Redirigir al idioma por defecto
+}
+
+// Usar el parámetro lang para las traducciones
+const t = useTranslations(lang as keyof typeof languageList);
+
+// Obtener las features usando la función importada
+const features = getFeatures(t);
+---
+
+<Layout title={`${t('services.title')} | Planium.AI`}>
+  <div class="flex flex-col min-h-screen">
+    <Navbar />
+
+    <main class="flex-grow">
+      <!-- Header con animación -->
+      <header
+        class="relative pt-28 pb-16 lg:pt-36 lg:pb-24 bg-secondary text-white overflow-hidden"
+      >
+        <!-- Elementos decorativos animados -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+          <div class="particle-container">
+            <div class="particles"></div>
+          </div>
+        </div>
+
+        <div
+          class="absolute inset-0 z-0 opacity-20"
+          style="background-image: radial-gradient(circle at 25% 25%, var(--color-primary) 0%, transparent 50%), radial-gradient(circle at 75% 75%, var(--color-inprogress) 0%, transparent 50%);"
+        >
+        </div>
+
+        <div class="container max-w-7xl mx-auto px-4 relative z-10">
+          <div class="max-w-4xl mx-auto text-center animate-fadeIn">
+            <h1
+              class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 animate-slideDown"
+            >
+              {t('services.title')}
+            </h1>
+            <p
+              class="text-base sm:text-lg md:text-xl opacity-90 animate-slideUp"
+            >
+              {t('services.subtitle')}
+            </p>
+            <div
+              class="w-24 h-1 bg-primary mx-auto mt-6 rounded-full animate-expand"
+            >
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sección de características principales -->
+      <section id="features" class="py-20 bg-white relative overflow-hidden">
+        <!-- Elementos decorativos sutiles -->
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 animate-float"
+        >
+        </div>
+        <div
+          class="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2 animate-float-delay"
+        >
+        </div>
+
+        <div class="container max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+          <!-- Grid de características -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          >
+            {
+              features.map((feature, index) => (
+                <div
+                  class="card-animate transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  style={`--delay: ${index * 0.15}s`}
+                >
+                  <FeatureCard
+                    title={feature.title}
+                    description={feature.description}
+                    icon={feature.icon}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <div class="flex items-center space-x-2">
+              <img src="/icons/logo.svg" alt="Planium.AI Logo" class="h-10" />
+              <span class="text-white text-3xl font-semibold">Planium</span>
+            </div>
+          </div>
+          <div class="flex flex-col items-center text-center space-y-2">
+            <p class="text-gray-400 text-sm">{t('footer.madeWith')}</p>
+            <p class="text-gray-400 text-sm">
+              &copy; {new Date().getFullYear()}
+              {t('footer.copyright')}
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  /* Animaciones existentes */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes expand {
+    from {
+      width: 0;
+    }
+    to {
+      width: 6rem;
+    } /* w-24 */
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Nuevas animaciones */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(40%, -40%);
+    }
+    50% {
+      transform: translate(42%, -42%) scale(1.05);
+    }
+  }
+
+  @keyframes float-delay {
+    0%,
+    100% {
+      transform: translate(-40%, 40%);
+    }
+    50% {
+      transform: translate(-42%, 42%) scale(1.1);
+    }
+  }
+
+  @keyframes reveal-width {
+    from {
+      width: 0;
+    }
+    to {
+      width: 5rem;
+    }
+  }
+
+  @keyframes reveal-opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes rotate-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Aplicación de animaciones */
+  .animate-fadeIn {
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.8s ease forwards;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.8s ease forwards;
+  }
+
+  .animate-expand {
+    animation: expand 1s ease forwards;
+  }
+
+  .animate-fadeInUp {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  .animate-float {
+    animation: float 15s ease-in-out infinite;
+  }
+
+  .animate-float-delay {
+    animation: float-delay 18s ease-in-out infinite;
+  }
+
+  /* Card animations */
+  .card-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* Reveal animations */
+  .reveal {
+    position: relative;
+  }
+
+  .reveal-line {
+    width: 0;
+    animation: reveal-width 1.5s ease forwards 0.3s;
+  }
+
+  .reveal-text {
+    opacity: 0;
+    animation: reveal-opacity 1s ease forwards 0.6s;
+  }
+
+  /* Particle animation */
+  .particle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position:
+      0 0,
+      10px 10px;
+    animation: rotate-slow 150s linear infinite;
+  }
+
+  /* Asegurarse de que las tarjetas tengan la misma altura */
+  #features .grid > div {
+    height: 100%;
+  }
+
+  /* Efecto hover suave para las tarjetas */
+  #features .grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script>
+  // Script para controlar animaciones basadas en scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '-50px',
+      }
+    );
+
+    // Observar elementos para animación
+    document.querySelectorAll('.card-animate').forEach((element) => {
+      observer.observe(element);
+    });
+  });
+</script>

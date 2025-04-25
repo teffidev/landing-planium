@@ -1,0 +1,11 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" fill="#FFF"/>
+  <rect width="32" height="8" fill="#AA151B" y="0"/>
+  <rect width="32" height="8" fill="#AA151B" y="24"/>
+  <rect width="32" height="16" fill="#F1BF00" y="8"/>
+  <!-- Simplified Spanish coat of arms -->
+  <g transform="translate(11,13) scale(0.03)">
+    <path fill="#AA151B" d="M240,120 L240,240 L120,240 L120,120 L240,120 Z"/>
+    <path fill="#F1BF00" d="M180,160 L200,200 L240,200 L210,230 L220,270 L180,250 L140,270 L150,230 L120,200 L160,200 L180,160 Z"/>
+  </g>
+</svg>

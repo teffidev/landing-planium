@@ -1,0 +1,606 @@
+---
+// import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languageList } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+
+// Esta función es requerida para todas las rutas dinámicas en Astro
+export function getStaticPaths() {
+  return Object.keys(languageList).map((lang) => {
+    return {
+      params: { lang },
+    };
+  });
+}
+
+// Obtener el parámetro de idioma de la URL
+const { lang } = Astro.params;
+
+// Validar que sea un idioma soportado
+if (!Object.keys(languageList).includes(lang!)) {
+  return Astro.redirect('/es/privacyPolicy'); // Redirigir al idioma por defecto
+}
+
+// Usar el parámetro lang para las traducciones
+const t = useTranslations(lang as keyof typeof languageList);
+---
+
+<Layout title="Políticas de Privacidad | Planium.AI">
+  <div class="flex flex-col min-h-screen">
+    <Navbar />
+    <main class="min-h-screen">
+      <!-- Header con animación -->
+      <header
+        class="relative pt-28 pb-16 lg:pt-36 lg:pb-24 bg-secondary text-white overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 z-0 opacity-20"
+          style="background-image: radial-gradient(circle at 25% 25%, var(--color-primary) 0%, transparent 50%), radial-gradient(circle at 75% 75%, var(--color-inprogress) 0%, transparent 50%);"
+        >
+        </div>
+
+        <div class="container max-w-7xl mx-auto px-4 relative z-10">
+          <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              {t('privacyPolicy.title')}
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl opacity-90">
+              {t('privacyPolicy.subtitle')}
+            </p>
+            <div class="w-24 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contenido principal -->
+      <section class="py-12 lg:py-16">
+        <div class="container mx-auto px-4">
+          <div
+            class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden"
+          >
+            <!-- Índice de la política -->
+            <div class="p-4 md:p-6 lg:p-8 bg-gray-50 border-b border-gray-200">
+              <h2
+                class="text-lg sm:text-xl font-semibold text-secondary mb-4 text-center sm:text-left"
+              >
+                {t('privacyPolicy.indice')}
+              </h2>
+              <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
+                <li>
+                  <a
+                    href="#introduccion"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >1</span
+                    >
+                    <span>{t('privacyPolicy.item1')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#informacion"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >2</span
+                    >
+                    <span>{t('privacyPolicy.item2')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#uso"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >3</span
+                    >
+                    <span>{t('privacyPolicy.item3')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#divulgacion"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >4</span
+                    >
+                    <span> {t('privacyPolicy.item4')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#seguridad"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >5</span
+                    >
+                    <span>{t('privacyPolicy.item5')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#derechos"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >6</span
+                    >
+                    <span>{t('privacyPolicy.item6')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#retencion"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >7</span
+                    >
+                    <span> {t('privacyPolicy.item7')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#cookies"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >8</span
+                    >
+                    <span>{t('privacyPolicy.item8')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#privacidad-app"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >9</span
+                    >
+                    <span>{t('privacyPolicy.item9')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#cambios"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >10</span
+                    >
+                    <span>{t('privacyPolicy.item10')}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#contacto"
+                    class="flex items-center hover:text-primary transition-colors"
+                  >
+                    <span
+                      class="inline-block w-6 h-6 rounded-full bg-secondary text-primary text-center mr-2"
+                      >11</span
+                    >
+                    <span>{t('privacyPolicy.item11')}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contenido de la política -->
+            <div class="p-4 md:p-6 lg:p-8 space-y-8 text-gray-700">
+              <!-- 1. Introducción -->
+              <section id="introduccion">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">1</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item1')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p>
+                    {t('privacyPolicy.description1')}
+                  </p>
+                </div>
+              </section>
+
+              <!-- 2. Información que Recopilamos -->
+              <section id="informacion">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">2</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item2')}
+                  </h2>
+                </div>
+                <div class="pl-14 space-y-4">
+                  <div>
+                    <h3 class="text-lg font-medium text-secondary mb-2">
+                      {t('privacyPolicy.itemA')}
+                    </h3>
+                    <p>
+                      {t('privacyPolicy.itemA1')}
+                    </p>
+                    <ul class="list-disc ml-6 mt-2 space-y-1">
+                      <li>
+                        {t('privacyPolicy.itemA2')}
+                      </li>
+                      <li>
+                        {t('privacyPolicy.itemA3')}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 class="text-lg font-medium text-secondary mb-2">
+                      {t('privacyPolicy.itemB')}
+                    </h3>
+                    <p>
+                      {t('privacyPolicy.itemB1')}
+                    </p>
+                    <ul class="list-disc ml-6 mt-2 space-y-1">
+                      <li>
+                        {t('privacyPolicy.itemB2')}
+                      </li>
+                      <li>
+                        {t('privacyPolicy.itemB3')}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 class="text-lg font-medium text-secondary mb-2">
+                      {t('privacyPolicy.itemC')}
+                    </h3>
+                    <p>{t('privacyPolicy.itemC1')}</p>
+                    <ul class="list-disc ml-6 mt-2 space-y-1">
+                      <li>
+                        {t('privacyPolicy.itemC2')}
+                      </li>
+                      <li>
+                        {t('privacyPolicy.itemC3')}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 3. Uso de la Información -->
+              <section id="uso">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">3</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item3')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p>{t('privacyPolicy.description2')}</p>
+                  <ul class="list-disc ml-6 mt-2 space-y-2">
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li1')}</span>
+                      <span>{t('privacyPolicy.itemLi1')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li2')}</span>
+                      <span>{t('privacyPolicy.itemLi2')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li3')}</span>
+                      <span>{t('privacyPolicy.itemLi3')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li4')}</span>
+                      <span>{t('privacyPolicy.itemLi4')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li5')}</span>
+                      <span>{t('privacyPolicy.itemLi5')}</span>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <!-- 4. Divulgación de Información a Terceros -->
+              <section id="divulgacion">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">4</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item4')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p class="mb-3">
+                    {t('privacyPolicy.description4')}
+                  </p>
+                  <ul class="list-disc ml-6 space-y-2">
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li6')}</span>
+                      <span>{t('privacyPolicy.itemLi6')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li7')}</span>
+                      <span>{t('privacyPolicy.itemLi7')}</span>
+                    </li>
+                    <li>
+                      <span class="font-medium">{t('privacyPolicy.Li8')}</span>
+                      <span>{t('privacyPolicy.itemLi8')}</span>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <!-- 5. Seguridad de la Información -->
+              <section id="seguridad">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">5</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item5')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p>
+                    {t('privacyPolicy.description5')}
+                  </p>
+                </div>
+              </section>
+
+              <!-- 6. Derechos del Usuario -->
+              <section id="derechos">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">6</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.Li9')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p class="mb-3">{t('privacyPolicy.itemLi9')}</p>
+                  <ul class="list-disc ml-6 space-y-1">
+                    <li>
+                      {t('privacyPolicy.itemLi9_1')}
+                    </li>
+                    <li>{t('privacyPolicy.itemLi9_2')}</li>
+                    <li>
+                      {t('privacyPolicy.itemLi9_3')}
+                    </li>
+                    <li>{t('privacyPolicy.itemLi9_4')}</li>
+                    <li>
+                      {t('privacyPolicy.itemLi9_5')}
+                    </li>
+                  </ul>
+                  <div class="mt-4 p-4 bg-primary/10 rounded-lg inline-block">
+                    <p>
+                      {t('privacyPolicy.derecho')}
+                      <a
+                        href="mailto:contacto@planium.ai"
+                        class="text-primary font-medium hover:underline"
+                        >{t('privacyPolicy.itemDerecho')}</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 7. Retención de Datos -->
+              <section id="retencion">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">7</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item7')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p>
+                    {t('privacyPolicy.description7')}
+                  </p>
+                </div>
+              </section>
+
+              <!-- 8. Cookies y Tecnologías Similares -->
+              <section id="cookies">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">8</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item8')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p class="mb-3">
+                    {t('privacyPolicy.cookies')}
+                  </p>
+                  <ul class="list-disc ml-6 space-y-1">
+                    <li>
+                      {t('privacyPolicy.itemCookies1')}
+                    </li>
+                    <li>{t('privacyPolicy.itemCookies2')}</li>
+                    <li>{t('privacyPolicy.itemCookies3')}</li>
+                  </ul>
+                  <p class="mt-3">
+                    {t('privacyPolicy.itemCookies4')}
+                  </p>
+                </div>
+              </section>
+
+              <!-- 9. Privacidad del Usuario en la Aplicación Móvil -->
+              <section id="privacidad-app">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">9</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item9')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p class="mb-3">
+                    {t('privacy.mobile')}
+                  </p>
+                  <ul class="list-disc ml-6 space-y-2">
+                    <li>
+                      {t('privacyPolicy.itemMobile1')}
+                    </li>
+                    <li>
+                      {t('privacyPolicy.itemMobile2')}
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <!-- 10. Cambios a esta Política de Privacidad -->
+              <section id="cambios">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">10</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item10')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p>
+                    Podemos actualizar esta Política de Privacidad
+                    periódicamente. Cuando realicemos cambios significativos, le
+                    notificaremos mediante un aviso destacado en nuestro sitio
+                    web o a través de su correo electrónico. Le recomendamos
+                    revisar esta política de forma regular para estar al tanto
+                    de cualquier modificación.
+                  </p>
+                </div>
+              </section>
+
+              <!-- 11. Contacto -->
+              <section id="contacto">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0"
+                  >
+                    <span class="text-primary font-bold">11</span>
+                  </div>
+                  <h2 class="text-lg sm:text-2xl font-semibold text-secondary">
+                    {t('privacyPolicy.item11')}
+                  </h2>
+                </div>
+                <div class="pl-14">
+                  <p class="mb-4">
+                    {t('privacyPolicy.contact')}
+                  </p>
+                  <div class="space-y-3">
+                    <a
+                      href="mailto:contacto@planium.ai"
+                      class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center mr-3"
+                      >
+                        <span class="text-primary">✉️</span>
+                      </div>
+                      <span>
+                        <span class="font-medium"
+                          >{t('privacyPolicy.itemContact1')}:</span
+                        >
+                        {t('privacyPolicy.itemContact2')}
+                      </span>
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/planium.ai/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center mr-3"
+                      >
+                        <span class="text-primary">🔗</span>
+                      </div>
+                      <span>
+                        <span class="font-medium"
+                          >{t('privacyPolicy.itemContact3')}:</span
+                        >
+                        {t('privacyPolicy.itemContact4')}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer con botón "Volver arriba" -->
+      <footer class="bg-secondary text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+              <div class="flex items-center space-x-2">
+                <img src="/icons/logo.svg" alt="Planium.AI Logo" class="h-10" />
+                <span class="text-white text-3xl font-semibold">Planium</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-center text-center space-y-2">
+              <!-- Texto de amor a Medusa Lab -->
+              <p class="text-gray-400 text-sm">{t('footer.madeWith')}</p>
+              <!-- Derechos reservados -->
+              <p class="text-gray-400 text-sm">
+                &copy; {new Date().getFullYear()}
+                {t('footer.copyright')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+</Layout>
+
+<script></script>

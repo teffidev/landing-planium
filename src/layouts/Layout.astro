@@ -1,0 +1,145 @@
+---
+import '@fontsource/montserrat';
+import { ClientRouter } from 'astro:transitions';
+const currentLang = Astro.currentLocale;
+import { languageList } from 'src/i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languageList).map((lang) => {
+    return {
+      params: { lang },
+    };
+  });
+}
+
+export interface Props {
+  title: string;
+}
+
+const { title = 'Planium.AI' } = Astro.props;
+---
+
+<!doctype html>
+<html lang={currentLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" is:inline
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+    ></script>
+    <ClientRouter />
+  </head>
+  <body class="font-montserrat bg-gray-50">
+    <slot />
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Inicialización de AOS con configuración optimizada
+        AOS.init({
+          duration: 1000,
+          easing: 'ease-in-out',
+          once: false,
+          mirror: false,
+          offset: 50,
+          delay: 0,
+          // Configuración crítica: No deshabilitar en móviles
+          disable: false,
+        });
+      });
+
+      // Refrescar AOS después de las transiciones de página de Astro
+      document.addEventListener('astro:page-load', () => {
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-primary: #facc15;
+    --color-secondary: #374151;
+    --color-pending: #facc15;
+    --color-warning: #f97316;
+    --color-inprogress: #3b82f6;
+    --color-success: #22c55e;
+    --color-error: #ef4444;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    /* Esto es lo importante */
+    overflow-x: hidden;
+  }
+
+  .navbar-fixed {
+    @apply fixed top-0 left-0 w-full z-50 shadow-md bg-white/90 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .carousel {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .carousel .slide {
+    scroll-snap-align: center;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .float-animation {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+</style>

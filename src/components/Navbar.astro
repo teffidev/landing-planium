@@ -1,0 +1,436 @@
+---
+import { Image } from 'astro:assets';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languageList } from 'src/i18n/ui';
+import { useTranslations } from 'src/i18n/utils';
+import { labels } from 'src/i18n/ui';
+
+import sapainFlag from 'src/assets/flags/spain-flag.svg';
+import usaFlag from 'src/assets/flags/usa-flag.svg';
+
+const currentLang = Astro.currentLocale;
+const currentPath = Astro.url.pathname;
+
+// Obtener la ruta actual sin el prefijo de idioma
+let pathWithoutLang = currentPath;
+// Eliminar el prefijo de idioma (/es/ o /en/) de la URL
+Object.keys(languageList).forEach((lang) => {
+  if (currentPath.startsWith(`/${lang}/`)) {
+    pathWithoutLang = currentPath.substring(lang.length + 1);
+  } else if (currentPath === `/${lang}`) {
+    pathWithoutLang = '/';
+  }
+});
+
+// Verificamos si la ruta actual corresponde a privacyPolicy
+if (
+  currentPath.endsWith('/privacyPolicy') ||
+  currentPath.endsWith('/privacyPolicy/')
+) {
+  if (currentPath.includes(`/${currentLang}/`)) {
+    // Si ya tiene prefijo de idioma, lo removemos para obtener solo "privacyPolicy"
+    pathWithoutLang = '/privacyPolicy';
+  }
+}
+
+const t = useTranslations(currentLang as keyof typeof languageList);
+
+// Crear un objeto con todas las traducciones para usar en JavaScript
+const allTranslations = JSON.stringify(labels);
+---
+
+<nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50" transition:persist>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex-shrink-0">
+        <div class="flex items-center space-x-2">
+          <img src="/icons/logo.svg" alt="Planium.AI Logo" class="h-10" />
+          <span class="text-secondary text-4xl font-semibold">Planium</span>
+        </div>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/')}
+          class="text-secondary font-semibold hover:text-primary transition-colors nav-item"
+          data-key="nav.home">{t('nav.home')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/services')}
+          class="text-secondary font-semibold hover:text-primary transition-colors nav-item"
+          data-key="nav.services">{t('nav.services')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/contact')}
+          class="text-secondary font-semibold hover:text-primary transition-colors nav-item"
+          data-key="nav.contact">{t('nav.contact')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/login')}
+          class="flex items-center space-x-2 bg-white border border-primary rounded-lg hover:bg-primary hover:text-white transition-all group"
+        >
+          <span
+            class="w-8 h-8 flex items-center justify-center bg-primary rounded-lg text-white group-hover:bg-white group-hover:text-primary transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <span
+            class="pr-4 text-primary font-medium group-hover:text-white nav-item"
+            data-key="nav.login">{t('nav.login')}</span
+          >
+        </a>
+
+        <!-- Language Selector with Flags -->
+        <div
+          class="flex items-center space-x-2 border-l pl-4 border-gray-400"
+          id="lang-selector"
+        >
+          <!-- Spain Flag (Spanish) -->
+          <a
+            href='#'
+            class={`rounded-full transition-colors flag-link ${
+              currentLang === 'es' ? 'ring-2 ring-primary ring-offset-1' : ''
+            }`}
+            data-lang="es"
+            title="Español (España)"
+          >
+            <Image
+              src={sapainFlag}
+              alt="Español"
+              width={24}
+              height={32}
+              class="rounded-full"
+            />
+          </a>
+
+          <!-- USA Flag (English) -->
+          <a
+            href='#'
+            class={`rounded-full transition-colors flag-link ${
+              currentLang === 'en' ? 'ring-2 ring-primary ring-offset-1' : ''
+            }`}
+            data-lang="en"
+            title="English (USA)"
+          >
+            <Image
+              src={usaFlag}
+              alt="Español"
+              width={24}
+              height={32}
+              class="rounded-full"
+            />
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="menu-toggle"
+        class="block md:hidden p-2 text-primary"
+        aria-label="Toggle menu"
+        type="button"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-8 h-8 text-primary-purple"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Panel -->
+    <div
+      class="md:hidden hidden items-center absolute w-full left-0 bg-white shadow-md z-50"
+      id="mobile-menu"
+    >
+      <div
+        class="flex flex-col items-center justify-center px-2 pt-2 pb-3 space-y-1"
+      >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/')}
+          class="block px-3 py-2 text-secondary font-medium hover:text-primary nav-item"
+          data-key="nav.home">{t('nav.home')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/services')}
+          class="block px-3 py-2 text-secondary font-medium hover:text-primary nav-item"
+          data-key="nav.services">{t('nav.services')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/contact')}
+          class="block px-3 py-2 text-secondary font-medium hover:text-primary nav-item"
+          data-key="nav.contact">{t('nav.contact')}</a
+        >
+        <a
+          href={getRelativeLocaleUrl(currentLang, '/login')}
+          class="flex items-center space-x-2 w-full mt-2 bg-white border border-primary rounded-lg hover:bg-primary hover:text-white transition-all group justify-center"
+        >
+          <span
+            class="py-1.5 px-3 text-primary font-medium group-hover:text-white nav-item"
+            data-key="nav.login">{t('nav.login')}</span
+          >
+        </a>
+
+        <!-- Mobile Language Selector with Flags -->
+        <div
+          class="flex items-center space-x-4 mt-4 pt-2 w-full justify-center mobile-lang-selector"
+        >
+          <!-- Spain Flag (Spanish) -->
+          <a
+            href='#'
+            class={`rounded-full transition-colors flag-link ${
+              currentLang === 'es' ? 'ring-2 ring-primary ring-offset-1' : ''
+            }`}
+            data-lang="es"
+            title="Español (España)"
+          >
+            <Image
+              src={sapainFlag}
+              alt="Español"
+              width={24}
+              height={32}
+              class="rounded-full"
+            />
+          </a>
+
+          <!-- USA Flag (English) -->
+          <a
+            href='#'
+            class={`rounded-full transition-colors flag-link ${
+              currentLang === 'en' ? 'ring-2 ring-primary ring-offset-1' : ''
+            }`}
+            data-lang="en"
+            title="English (USA)"
+          >
+            <Image
+              src={usaFlag}
+              alt="Español"
+              width={24}
+              height={32}
+              class="rounded-full"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mantener información del idioma actual en el DOM para acceso via JavaScript -->
+<div
+  id="current-language-data"
+  data-current-lang={currentLang}
+  data-translations={allTranslations}
+  style="display: none;"
+>
+</div>
+
+<script>
+  // Variable global para almacenar el idioma actual
+  let currentLanguage = '';
+
+  // Variable global para almacenar las traducciones
+  let translations = {};
+
+  // Definimos toggleMenu afuera para mantener la misma referencia
+  const toggleMenu = () => {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+      menu.classList.toggle('hidden');
+    }
+  };
+
+  // Función para actualizar el idioma activo en los selectores
+  function updateLanguageSelector(newLang) {
+    // Actualizar selectores de idioma (desktop y mobile)
+    document.querySelectorAll('.flag-link').forEach((link) => {
+      const linkLang = link.getAttribute('data-lang');
+      if (linkLang === newLang) {
+        link.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
+      } else {
+        link.classList.remove('ring-2', 'ring-primary', 'ring-offset-1');
+      }
+    });
+  }
+
+  // Función para actualizar las traducciones en la UI
+  function updateTranslations(lang) {
+    if (!translations[lang]) return;
+
+    // Actualizar todos los elementos con data-key
+    document.querySelectorAll('.nav-item').forEach((el) => {
+      const key = el.getAttribute('data-key');
+      if (key && translations[lang][key]) {
+        el.textContent = translations[lang][key];
+      }
+    });
+  }
+
+  function detectLanguageChange() {
+    // Detectar el idioma actual basado en la URL
+    const path = window.location.pathname;
+    let detectedLang = 'es'; // default
+
+    if (path.startsWith('/en/') || path === '/en') {
+      detectedLang = 'en';
+    } else if (path.startsWith('/es/') || path === '/es') {
+      detectedLang = 'es';
+    }
+
+    // Si ha cambiado el idioma, actualizar la UI
+    if (detectedLang !== currentLanguage) {
+      currentLanguage = detectedLang;
+      updateLanguageSelector(currentLanguage);
+      updateTranslations(currentLanguage);
+    }
+  }
+
+  function initializeNavbar() {
+    // Cargar información inicial
+    const langData = document.getElementById('current-language-data');
+    if (langData) {
+      currentLanguage = langData.getAttribute('data-current-lang') || 'es';
+      try {
+        const translationsData = langData.getAttribute('data-translations');
+        if (translationsData) {
+          translations = JSON.parse(translationsData);
+        }
+      } catch (e) {
+        console.error('Error parsing translations:', e);
+      }
+    }
+
+    // Configurar menú móvil
+    const button = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+
+    if (button && menu) {
+      // Primero removemos todos los event listeners antiguos
+      button.replaceWith(button.cloneNode(true));
+
+      // Obtenemos la referencia al nuevo botón
+      const newButton = document.getElementById('menu-toggle');
+
+      // Agregamos el nuevo event listener
+      newButton?.addEventListener('click', toggleMenu);
+
+      // Manejamos los clicks en los enlaces
+      const mobileLinks = menu.querySelectorAll('a');
+      mobileLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          menu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Detectar cambios de idioma
+    detectLanguageChange();
+  }
+
+  // Inicializar en la carga inicial
+  document.addEventListener('DOMContentLoaded', initializeNavbar);
+
+  // Inicializar después de las transiciones de página
+  document.addEventListener('astro:page-load', initializeNavbar);
+
+  // Detectar cambios en la navegación para actualizar el idioma
+  document.addEventListener('astro:after-swap', detectLanguageChange);
+
+  // Limpiamos los event listeners antes de la transición
+  document.addEventListener('astro:before-preparation', () => {
+    const button = document.getElementById('menu-toggle');
+    if (button) {
+      button.removeEventListener('click', toggleMenu);
+    }
+  });
+
+  // Función para cambiar de idioma manteniendo la misma página
+  function switchLanguage(event, targetLang) {
+    event.preventDefault();
+
+    // Obtener la ruta actual
+    const currentPath = window.location.pathname;
+
+    // Detectar el idioma actual
+    let currentLang = 'es'; // valor por defecto
+    if (currentPath.startsWith('/en/') || currentPath === '/en') {
+      currentLang = 'en';
+    } else if (currentPath.startsWith('/es/') || currentPath === '/es') {
+      currentLang = 'es';
+    }
+
+    // No hacer nada si ya estamos en el idioma deseado
+    if (currentLang === targetLang) {
+      return;
+    }
+
+    // Extraer la ruta sin el prefijo de idioma
+    let pathWithoutLang = '/';
+
+    if (currentPath.startsWith(`/${currentLang}/`)) {
+      pathWithoutLang = currentPath.substring(currentLang.length + 1);
+    } else if (
+      currentPath !== `/${currentLang}` &&
+      currentPath !== `/${currentLang}/`
+    ) {
+      // Si no tiene prefijo de idioma, usar la ruta completa
+      pathWithoutLang = currentPath;
+    }
+
+    // Construir la nueva URL
+    const newPath = `/${targetLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+
+    // Navegar a la nueva URL
+    window.location.href = newPath;
+  }
+
+  // Agregar event listeners a los botones de idioma
+  document.addEventListener('DOMContentLoaded', () => {
+    const esButton = document.querySelector('[data-lang="es"]');
+    const enButton = document.querySelector('[data-lang="en"]');
+
+    if (esButton) {
+      esButton.addEventListener('click', (e) => switchLanguage(e, 'es'));
+    }
+
+    if (enButton) {
+      enButton.addEventListener('click', (e) => switchLanguage(e, 'en'));
+    }
+  });
+
+  // También inicializar después de las transiciones de página
+  document.addEventListener('astro:page-load', () => {
+    const esButton = document.querySelector('[data-lang="es"]');
+    const enButton = document.querySelector('[data-lang="en"]');
+
+    if (esButton) {
+      esButton.addEventListener('click', (e) => switchLanguage(e, 'es'));
+    }
+
+    if (enButton) {
+      enButton.addEventListener('click', (e) => switchLanguage(e, 'en'));
+    }
+  });
+</script>

@@ -1,0 +1,6 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bandera de Colombia en formato cuadrado -->
+  <rect width="32" height="16" fill="#FFD700" />
+  <rect width="32" height="8" y="16" fill="#0050F0" />
+  <rect width="32" height="8" y="24" fill="#CE1126" />
+</svg>

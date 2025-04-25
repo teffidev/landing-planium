@@ -1,0 +1,36 @@
+---
+import About from '../../components/About.astro';
+import ContactComponent from '../../components/ContactComponent.astro';
+import Faq from '../../components/Faq.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/Hero.astro';
+import Navbar from '../../components/Navbar.astro';
+import ServicesComponent from '../../components/ServicesComponent.astro';
+import Layout from '../../layouts/Layout.astro';
+
+import { languageList } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languageList).map((lang) => {
+    return {
+      params: { lang },
+    };
+  });
+}
+---
+
+<Layout title="Planium.AI">
+  <div class="flex flex-col min-h-screen">
+    <Navbar />
+
+    <main class="flex-grow">
+      <Hero />
+      <About />
+      <ServicesComponent />
+      <ContactComponent />
+      <Faq />
+    </main>
+
+    <Footer />
+  </div>
+</Layout>

@@ -1,0 +1,256 @@
+---
+// import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languageList } from 'src/i18n/ui';
+import { useTranslations } from 'src/i18n/utils';
+
+const currentLang = Astro.currentLocale;
+
+const t = useTranslations(currentLang as keyof typeof languageList);
+---
+
+<section id="faq" class="py-20 bg-gray-50">
+  <div class="container max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">
+        {t('faq.title')}
+      </h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-6"></div>
+      <p class="text-secondary max-w-3xl mx-auto">
+        {t('faq.subtitle')}
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+      <div class="space-y-6">
+        <!-- Pregunta 1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <button class="faq-toggle w-full text-left p-6 focus:outline-none">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-secondary">
+                {t('faq.question1')}
+              </h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-icon h-6 w-6 text-primary transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-secondary">
+            <p>
+              {t('faq.answer1')}
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <button class="faq-toggle w-full text-left p-6 focus:outline-none">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-secondary">
+                {t('faq.question2')}
+              </h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-icon h-6 w-6 text-primary transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-secondary">
+            <p>
+              {t('faq.answer2')}
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>
+                {t('faq.item1')}
+              </li>
+              <li>
+                {t('faq.item2')}
+              </li>
+              <li>
+                {t('faq.item3')}
+              </li>
+            </ul>
+            <p class="mt-2">
+              {t('faq.answerTwo')}
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <button class="faq-toggle w-full text-left p-6 focus:outline-none">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-secondary">
+                {t('faq.question3')}
+              </h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-icon h-6 w-6 text-primary transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-secondary">
+            <p>
+              {t('faq.answer3')}
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <button class="faq-toggle w-full text-left p-6 focus:outline-none">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-secondary">
+                {t('faq.question4')}
+              </h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-icon h-6 w-6 text-primary transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-secondary">
+            <p>
+              {t('faq.answer4')}
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>{t('faq.item4')}</li>
+              <li>{t('faq.item5')}</li>
+              <li>{t('faq.item6')}</li>
+              <li>{t('faq.item7')}</li>
+              <li>{t('faq.item8')}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pregunta 5 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <button class="faq-toggle w-full text-left p-6 focus:outline-none">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-secondary">
+                {t('faq.question5')}
+              </h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-icon h-6 w-6 text-primary transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-secondary">
+            <p>
+              {t('faq.answer5')}
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>{t('faq.item9')}</li>
+              <li>
+                {t('faq.item10')}
+              </li>
+              <li>{t('faq.item11')}</li>
+              <li>{t('faq.item12')}</li>
+              <li>{t('faq.item13')}</li>
+            </ul>
+            <p class="mt-2">
+              {t('faq.answer6')}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Función para inicializar los acordeones
+  function initFaqToggles() {
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+
+    faqToggles.forEach((toggle) => {
+      // Primero eliminamos los event listeners existentes
+      const newToggle = toggle.cloneNode(true) as HTMLElement;
+      toggle.parentNode?.replaceChild(newToggle, toggle);
+
+      // Luego agregamos el nuevo event listener
+      newToggle.addEventListener('click', () => {
+        const content = newToggle.nextElementSibling as HTMLElement;
+        const icon = newToggle.querySelector('.faq-icon') as HTMLElement;
+
+        // Toggle content visibility
+        content?.classList.toggle('hidden');
+
+        // Rotate icon
+        if (content?.classList.contains('hidden')) {
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          icon.style.transform = 'rotate(180deg)';
+        }
+
+        // Close other FAQs
+        document.querySelectorAll('.faq-toggle').forEach((otherToggle) => {
+          if (otherToggle !== newToggle) {
+            const otherContent = otherToggle.nextElementSibling as HTMLElement;
+            const otherIcon = otherToggle.querySelector(
+              '.faq-icon'
+            ) as HTMLElement;
+
+            otherContent?.classList.add('hidden');
+            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+          }
+        });
+      });
+    });
+  }
+
+  // Inicializar en la carga inicial
+  document.addEventListener('DOMContentLoaded', initFaqToggles);
+
+  // Inicializar después de las transiciones de página de Astro
+  document.addEventListener('astro:page-load', initFaqToggles);
+
+  // También reinicializar cuando se complete un cambio de página
+  document.addEventListener('astro:after-swap', initFaqToggles);
+</script>

@@ -1,0 +1,128 @@
+---
+import FeatureCard from './FeatureCard.astro';
+// import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languageList } from 'src/i18n/ui';
+import { useTranslations } from 'src/i18n/utils';
+import { getFeatures } from 'src/utils/features';
+
+const currentLang = Astro.currentLocale;
+
+const t = useTranslations(currentLang as keyof typeof languageList);
+
+const features = getFeatures(t);
+---
+
+<section id="services" class="py-20 bg-gray-50">
+  <div class="container max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">
+        {t('services.title')}
+      </h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-6"></div>
+      <p class="text-secondary max-w-3xl mx-auto">
+        {t('services.subtitle')}
+      </p>
+    </div>
+
+    <!-- Swiper Container -->
+    <div class="swiper services-swiper" data-aos="fade-up" data-aos-delay="200">
+      <div class="swiper-wrapper pb-12">
+        {
+          features.map((feature) => (
+            <div class="swiper-slide p-2">
+              <FeatureCard
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  declare const Swiper: any;
+
+  function initializeServicesSwiper() {
+    // Destruir instancia anterior si existe
+    const swiperElement = document.querySelector('.services-swiper') as any;
+    if (swiperElement?.swiper) {
+      swiperElement.swiper.destroy(true, true);
+    }
+
+    // Crear nueva instancia
+    new Swiper('.services-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      centeredSlides: false,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      // Se eliminaron los botones de navegación
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        1280: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+      },
+      effect: 'slide',
+    });
+  }
+
+  // Inicializar en la carga inicial
+  document.addEventListener('DOMContentLoaded', initializeServicesSwiper);
+
+  // Inicializar después de las transiciones (para compatibilidad con View Transitions)
+  document.addEventListener('astro:page-load', initializeServicesSwiper);
+</script>
+
+<style is:global>
+  /* Estilos para Swiper */
+  .swiper-pagination {
+    position: relative !important;
+    bottom: 0 !important;
+    margin-top: 20px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    background-color: #d1d5db !important;
+    opacity: 1 !important;
+    margin: 0 6px !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #facc15 !important;
+    transform: scale(1.2) !important;
+    transition: all 0.3s ease !important;
+  }
+</style>
